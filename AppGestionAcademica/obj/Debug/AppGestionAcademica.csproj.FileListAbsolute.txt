@@ -1,0 +1,17 @@
+F:\UNSAAC\Semestres\2024-2\IF612AIN2024-2\Sesiones de clase\Laboratorio\Practica AA - Conexion a BD\AppGestionAcademica\bin\Debug\AppGestionAcademica.exe.config
+F:\UNSAAC\Semestres\2024-2\IF612AIN2024-2\Sesiones de clase\Laboratorio\Practica AA - Conexion a BD\AppGestionAcademica\bin\Debug\AppGestionAcademica.exe
+F:\UNSAAC\Semestres\2024-2\IF612AIN2024-2\Sesiones de clase\Laboratorio\Practica AA - Conexion a BD\AppGestionAcademica\bin\Debug\AppGestionAcademica.pdb
+F:\UNSAAC\Semestres\2024-2\IF612AIN2024-2\Sesiones de clase\Laboratorio\Practica AA - Conexion a BD\AppGestionAcademica\obj\Debug\AppGestionAcademica.Properties.Resources.resources
+F:\UNSAAC\Semestres\2024-2\IF612AIN2024-2\Sesiones de clase\Laboratorio\Practica AA - Conexion a BD\AppGestionAcademica\obj\Debug\AppGestionAcademica.csproj.GenerateResource.cache
+F:\UNSAAC\Semestres\2024-2\IF612AIN2024-2\Sesiones de clase\Laboratorio\Practica AA - Conexion a BD\AppGestionAcademica\obj\Debug\AppGestionAcademica.csproj.CoreCompileInputs.cache
+F:\UNSAAC\Semestres\2024-2\IF612AIN2024-2\Sesiones de clase\Laboratorio\Practica AA - Conexion a BD\AppGestionAcademica\obj\Debug\AppGestionAcademica.exe
+F:\UNSAAC\Semestres\2024-2\IF612AIN2024-2\Sesiones de clase\Laboratorio\Practica AA - Conexion a BD\AppGestionAcademica\obj\Debug\AppGestionAcademica.pdb
+F:\UNSAAC\Semestres\2024-2\IF612AIN2024-2\Sesiones de clase\Laboratorio\Practica AA - Conexion a BD\AppGestionAcademica\obj\Debug\AppGestionAcademica.fmAlumno.resources
+F:\UNSAAC\Semestres\2024-2\IF612AIN2024-2\Sesiones de clase\Laboratorio\Practica AA - Conexion a BD\AppGestionAcademica\obj\Debug\AppGestionAcademica.fmMenu.resources
+F:\UNSAAC\Semestres\2024-2\IF612AIN2024-2\Sesiones de clase\Laboratorio\Practica AA - Conexion a BD\AppGestionAcademica\obj\Debug\AppGestionAcademica.fmEscuela.resources
+F:\UNSAAC\Semestres\2024-2\IF612AIN2024-2\Sesiones de clase\Laboratorio\Practica AA - Conexion a BD\AppGestionAcademica\obj\Debug\AppGestionAcademica.fmAsignatura.resources
+F:\UNSAAC\Semestres\2024-2\IF612AIN2024-2\Sesiones de clase\Laboratorio\Practica AA - Conexion a BD\AppGestionAcademica\obj\Debug\AppGestionAcademica.fmReporteEscuelas.resources
+F:\UNSAAC\Semestres\2024-2\IF612AIN2024-2\Sesiones de clase\Laboratorio\Practica AA - Conexion a BD\AppGestionAcademica\obj\Debug\AppGestionAcademica.fmMatricula.resources
+F:\UNSAAC\Semestres\2024-2\IF612AIN2024-2\Sesiones de clase\Laboratorio\Practica AA - Conexion a BD\AppGestionAcademica\obj\Debug\AppGestionAcademica.fmConsulta.resources
+F:\UNSAAC\Semestres\2024-2\IF612AIN2024-2\Sesiones de clase\Laboratorio\Practica AA - Conexion a BD\AppGestionAcademica\obj\Debug\AppGestionAcademica.fmReporteAlumnos.resources
+F:\UNSAAC\Semestres\2024-2\IF612AIN2024-2\Sesiones de clase\Laboratorio\Practica AA - Conexion a BD\AppGestionAcademica\obj\Debug\AppGestionAcademica.fmReporteAsignaturas.resources
