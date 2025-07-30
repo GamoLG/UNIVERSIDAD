@@ -1,0 +1,191 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Project ToolsVersion="15.0" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+  <Import Project="$(MSBuildExtensionsPath)\$(MSBuildToolsVersion)\Microsoft.Common.props" Condition="Exists('$(MSBuildExtensionsPath)\$(MSBuildToolsVersion)\Microsoft.Common.props')" />
+  <PropertyGroup>
+    <Configuration Condition=" '$(Configuration)' == '' ">Debug</Configuration>
+    <Platform Condition=" '$(Platform)' == '' ">AnyCPU</Platform>
+    <ProjectGuid>{C597EDE3-810A-4C5E-A202-56D5BDDF566E}</ProjectGuid>
+    <OutputType>WinExe</OutputType>
+    <RootNamespace>AppBibliotecaDigital</RootNamespace>
+    <AssemblyName>AppBibliotecaDigital</AssemblyName>
+    <TargetFrameworkVersion>v4.7.2</TargetFrameworkVersion>
+    <FileAlignment>512</FileAlignment>
+    <AutoGenerateBindingRedirects>true</AutoGenerateBindingRedirects>
+    <Deterministic>true</Deterministic>
+  </PropertyGroup>
+  <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Debug|AnyCPU' ">
+    <PlatformTarget>AnyCPU</PlatformTarget>
+    <DebugSymbols>true</DebugSymbols>
+    <DebugType>full</DebugType>
+    <Optimize>false</Optimize>
+    <OutputPath>bin\Debug\</OutputPath>
+    <DefineConstants>DEBUG;TRACE</DefineConstants>
+    <ErrorReport>prompt</ErrorReport>
+    <WarningLevel>4</WarningLevel>
+  </PropertyGroup>
+  <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Release|AnyCPU' ">
+    <PlatformTarget>AnyCPU</PlatformTarget>
+    <DebugType>pdbonly</DebugType>
+    <Optimize>true</Optimize>
+    <OutputPath>bin\Release\</OutputPath>
+    <DefineConstants>TRACE</DefineConstants>
+    <ErrorReport>prompt</ErrorReport>
+    <WarningLevel>4</WarningLevel>
+  </PropertyGroup>
+  <ItemGroup>
+    <Reference Include="System" />
+    <Reference Include="System.Core" />
+    <Reference Include="System.Numerics" />
+    <Reference Include="System.Xml.Linq" />
+    <Reference Include="System.Data.DataSetExtensions" />
+    <Reference Include="Microsoft.CSharp" />
+    <Reference Include="System.Data" />
+    <Reference Include="System.Deployment" />
+    <Reference Include="System.Drawing" />
+    <Reference Include="System.Net.Http" />
+    <Reference Include="System.Windows.Forms" />
+    <Reference Include="System.Xml" />
+  </ItemGroup>
+  <ItemGroup>
+    <Compile Include="cLogicaBD.cs" />
+    <Compile Include="fmAdministradores.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="fmAdministradores.Designer.cs">
+      <DependentUpon>fmAdministradores.cs</DependentUpon>
+    </Compile>
+    <Compile Include="fmClickAqui.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="fmClickAqui.Designer.cs">
+      <DependentUpon>fmClickAqui.cs</DependentUpon>
+    </Compile>
+    <Compile Include="fmDevoluciones.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="fmDevoluciones.Designer.cs">
+      <DependentUpon>fmDevoluciones.cs</DependentUpon>
+    </Compile>
+    <Compile Include="fmHistorialPrestamos.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="fmHistorialPrestamos.Designer.cs">
+      <DependentUpon>fmHistorialPrestamos.cs</DependentUpon>
+    </Compile>
+    <Compile Include="fmLectores.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="fmLectores.Designer.cs">
+      <DependentUpon>fmLectores.cs</DependentUpon>
+    </Compile>
+    <Compile Include="fmLibros.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="fmLibros.Designer.cs">
+      <DependentUpon>fmLibros.cs</DependentUpon>
+    </Compile>
+    <Compile Include="fmMenu.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="fmMenu.Designer.cs">
+      <DependentUpon>fmMenu.cs</DependentUpon>
+    </Compile>
+    <Compile Include="fmPrestamos.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="fmPrestamos.Designer.cs">
+      <DependentUpon>fmPrestamos.cs</DependentUpon>
+    </Compile>
+    <Compile Include="fmPrestamosActivos.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="fmPrestamosActivos.Designer.cs">
+      <DependentUpon>fmPrestamosActivos.cs</DependentUpon>
+    </Compile>
+    <Compile Include="fmSalir.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="fmSalir.Designer.cs">
+      <DependentUpon>fmSalir.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Program.cs" />
+    <Compile Include="Properties\AssemblyInfo.cs" />
+    <EmbeddedResource Include="fmAdministradores.resx">
+      <DependentUpon>fmAdministradores.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="fmClickAqui.resx">
+      <DependentUpon>fmClickAqui.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="fmDevoluciones.resx">
+      <DependentUpon>fmDevoluciones.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="fmHistorialPrestamos.resx">
+      <DependentUpon>fmHistorialPrestamos.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="fmLectores.resx">
+      <DependentUpon>fmLectores.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="fmLibros.resx">
+      <DependentUpon>fmLibros.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="fmMenu.resx">
+      <DependentUpon>fmMenu.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="fmPrestamos.resx">
+      <DependentUpon>fmPrestamos.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="fmPrestamosActivos.resx">
+      <DependentUpon>fmPrestamosActivos.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="fmSalir.resx">
+      <DependentUpon>fmSalir.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Properties\Resources.resx">
+      <Generator>ResXFileCodeGenerator</Generator>
+      <SubType>Designer</SubType>
+      <LastGenOutput>Resources.Designer.cs</LastGenOutput>
+    </EmbeddedResource>
+    <None Include="Properties\Settings.settings">
+      <Generator>SettingsSingleFileGenerator</Generator>
+      <LastGenOutput>Settings.Designer.cs</LastGenOutput>
+    </None>
+    <Compile Include="Properties\Resources.Designer.cs">
+      <AutoGen>True</AutoGen>
+      <DesignTime>True</DesignTime>
+      <DependentUpon>Resources.resx</DependentUpon>
+    </Compile>
+    <Compile Include="Properties\Settings.Designer.cs">
+      <AutoGen>True</AutoGen>
+      <DependentUpon>Settings.settings</DependentUpon>
+      <DesignTimeSharedInput>True</DesignTimeSharedInput>
+    </Compile>
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="App.config" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\EPIIS.jpg" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\UNSAAC.jpg" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\UNSAAC1.jpg" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\EPIIS.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\EPIIS-pequeño.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\salida.jpg" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\logo-biblioteca %281%29.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\digital.png" />
+  </ItemGroup>
+  <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
+</Project>
