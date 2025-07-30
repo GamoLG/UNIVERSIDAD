@@ -1,0 +1,422 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Perfil Docente - {{ docente.nombre }}</title>
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/css/bootstrap.min.css" rel="stylesheet">
+    <style>
+        .card {
+            border: 1px solid #ddd;
+            box-shadow: 0 2px 4px rgba(0,0,0,0.1);
+        }
+
+        .text-danger {
+            color: #8B0000 !important;
+        }
+
+        .btn-outline-primary {
+            border-color: #007bff;
+            color: #007bff;
+        }
+
+        .btn-outline-primary:hover {
+            background-color: #007bff;
+            color: white;
+        }
+
+        .form-control-sm {
+            max-width: 200px;
+        }
+
+        .status-uploaded {
+            color: #28a745;
+            font-weight: bold;
+        }
+
+        .status-not-uploaded {
+            color: #6c757d;
+            font-style: italic;
+        }
+
+        .file-info {
+            font-size: 0.9em;
+            color: #6c757d;
+        }
+
+        .btn-upload {
+            background-color: #8B0000;
+            color: white;
+            border: none;
+        }
+
+        .btn-upload:hover {
+            background-color: #660000;
+            color: white;
+        }
+
+        @media (max-width: 768px) {
+            .row.align-items-center .col-md-4 {
+                margin-bottom: 10px;
+            }
+            
+            .d-flex.align-items-center {
+                flex-direction: column;
+                align-items: stretch !important;
+            }
+            
+            .form-control-sm {
+                max-width: 100%;
+                margin-bottom: 10px;
+            }
+        }
+
+        .navbar-brand {
+            color: #8B0000 !important;
+        }
+
+        .navbar {
+            background-color: #f8f9fa;
+            border-bottom: 2px solid #8B0000;
+        }
+    </style>
+</head>
+<body>
+    <!-- Navbar -->
+    <nav class="navbar navbar-expand-lg navbar-light">
+        <div class="container">
+            <a class="navbar-brand fw-bold" href="#">Sistema de Gestión Docente</a>
+            <div class="navbar-nav ms-auto">
+                <span class="nav-link">Bienvenido, {{ docente.nombre }}</span>
+                <a href="{{ url_for('logout') }}" class="btn btn-outline-danger btn-sm">Cerrar Sesión</a>
+            </div>
+        </div>
+    </nav>
+
+    <!-- Contenido Principal -->
+    <div class="container mt-4">
+        <!-- Mostrar mensajes flash -->
+        {% with messages = get_flashed_messages(with_categories=true) %}
+            {% if messages %}
+                {% for category, message in messages %}
+                    <div class="alert alert-{{ 'danger' if category == 'error' else category }} alert-dismissible fade show" role="alert">
+                        {{ message }}
+                        <button type="button" class="btn-close" data-bs-dismiss="alert"></button>
+                    </div>
+                {% endfor %}
+            {% endif %}
+        {% endwith %}
+
+        <!-- Información del Docente -->
+        <div class="row mb-4">
+            <div class="col-12">
+                <div class="card">
+                    <div class="card-body">
+                        <h2 class="card-title text-danger">Datos Personales</h2>
+                        <h4>{{ docente.nombre }}</h4>
+                        <p class="text-muted">Email: {{ docente.email }}</p>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Sección de Documentos -->
+        <div class="row">
+            <div class="col-12">
+                <h3 class="mb-3">Documentos</h3>
+
+                <!-- Carátula -->
+                <div class="card mb-3">
+                    <div class="card-body">
+                        <h5 class="text-danger">Carátula</h5>
+                        <div class="row align-items-center">
+                            <div class="col-md-4">
+                                {% if archivos_dict and 'caratula' in archivos_dict %}
+                                    <span class="status-uploaded">✅ Archivo subido</span>
+                                    <br>
+                                    <small class="file-info">
+                                        Subido: {{ archivos_dict['caratula']['fecha_subida'] }}
+                                    </small>
+                                    <br>
+                                    <a href="{{ url_for('static', filename='uploads/' + archivos_dict['caratula']['ruta_archivo']) }}" 
+                                       target="_blank" class="btn btn-sm btn-outline-primary mt-1">
+                                        📄 Ver Archivo
+                                    </a>
+                                {% else %}
+                                    <span class="status-not-uploaded">No hay archivo subido</span>
+                                {% endif %}
+                            </div>
+                            <div class="col-md-4 text-center">
+                                {% if 'caratula' in formatos_disponibles %}
+                                    <a href="{{ url_for('descargar_formato', tipo='caratula') }}" 
+                                       class="btn btn-primary btn-sm">
+                                        📥 Descargar Formato
+                                    </a>
+                                {% else %}
+                                    <span class="text-muted">Formato no disponible</span>
+                                {% endif %}
+                            </div>
+                            <div class="col-md-4">
+                                <form method="POST" action="{{ url_for('subir_archivo', docente_id=docente.id) }}" 
+                                      enctype="multipart/form-data" class="d-flex align-items-center">
+                                    <input type="hidden" name="tipo_archivo" value="caratula">
+                                    <input type="file" name="archivo" accept=".pdf" 
+                                           class="form-control form-control-sm me-2" required>
+                                    <button type="submit" class="btn btn-sm btn-upload">
+                                        Subir Carátula
+                                    </button>
+                                </form>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Carga Lectiva -->
+                <div class="card mb-3">
+                    <div class="card-body">
+                        <h5 class="text-danger">Carga Lectiva</h5>
+                        <div class="row align-items-center">
+                            <div class="col-md-4">
+                                {% if archivos_dict and 'carga_lectiva' in archivos_dict %}
+                                    <span class="status-uploaded">✅ Archivo subido</span>
+                                    <br>
+                                    <small class="file-info">
+                                        Subido: {{ archivos_dict['carga_lectiva']['fecha_subida'] }}
+                                    </small>
+                                    <br>
+                                    <a href="{{ url_for('static', filename='uploads/' + archivos_dict['carga_lectiva']['ruta_archivo']) }}" 
+                                       target="_blank" class="btn btn-sm btn-outline-primary mt-1">
+                                        📄 Ver Archivo
+                                    </a>
+                                {% else %}
+                                    <span class="status-not-uploaded">No hay archivo subido</span>
+                                {% endif %}
+                            </div>
+                            <div class="col-md-4 text-center">
+                                {% if 'carga_lectiva' in formatos_disponibles %}
+                                    <a href="{{ url_for('descargar_formato', tipo='carga_lectiva') }}" 
+                                       class="btn btn-primary btn-sm">
+                                        📥 Descargar Formato
+                                    </a>
+                                {% else %}
+                                    <span class="text-muted">Formato no disponible</span>
+                                {% endif %}
+                            </div>
+                            <div class="col-md-4">
+                                <form method="POST" action="{{ url_for('subir_archivo', docente_id=docente.id) }}" 
+                                      enctype="multipart/form-data" class="d-flex align-items-center">
+                                    <input type="hidden" name="tipo_archivo" value="carga_lectiva">
+                                    <input type="file" name="archivo" accept=".pdf" 
+                                           class="form-control form-control-sm me-2" required>
+                                    <button type="submit" class="btn btn-sm btn-upload">
+                                        Subir Carga Lectiva
+                                    </button>
+                                </form>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Curriculum Vitae -->
+                <div class="card mb-3">
+                    <div class="card-body">
+                        <h5 class="text-danger">Curriculum Vitae</h5>
+                        <div class="row align-items-center">
+                            <div class="col-md-4">
+                                {% if archivos_dict and 'cv' in archivos_dict %}
+                                    <span class="status-uploaded">✅ Archivo subido</span>
+                                    <br>
+                                    <small class="file-info">
+                                        Subido: {{ archivos_dict['cv']['fecha_subida'] }}
+                                    </small>
+                                    <br>
+                                    <a href="{{ url_for('static', filename='uploads/' + archivos_dict['cv']['ruta_archivo']) }}" 
+                                       target="_blank" class="btn btn-sm btn-outline-primary mt-1">
+                                        📄 Ver Archivo
+                                    </a>
+                                {% else %}
+                                    <span class="status-not-uploaded">No hay archivo subido</span>
+                                {% endif %}
+                            </div>
+                            <div class="col-md-4 text-center">
+                                {% if 'cv' in formatos_disponibles %}
+                                    <a href="{{ url_for('descargar_formato', tipo='cv') }}" 
+                                       class="btn btn-primary btn-sm">
+                                        📥 Descargar Formato
+                                    </a>
+                                {% else %}
+                                    <span class="text-muted">Formato no disponible</span>
+                                {% endif %}
+                            </div>
+                            <div class="col-md-4">
+                                <form method="POST" action="{{ url_for('subir_archivo', docente_id=docente.id) }}" 
+                                      enctype="multipart/form-data" class="d-flex align-items-center">
+                                    <input type="hidden" name="tipo_archivo" value="cv">
+                                    <input type="file" name="archivo" accept=".pdf" 
+                                           class="form-control form-control-sm me-2" required>
+                                    <button type="submit" class="btn btn-sm btn-upload">
+                                        Subir CV
+                                    </button>
+                                </form>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Filosofía -->
+                <div class="card mb-3">
+                    <div class="card-body">
+                        <h5 class="text-danger">Filosofía</h5>
+                        <div class="row align-items-center">
+                            <div class="col-md-4">
+                                {% if archivos_dict and 'filosofia' in archivos_dict %}
+                                    <span class="status-uploaded">✅ Archivo subido</span>
+                                    <br>
+                                    <small class="file-info">
+                                        Subido: {{ archivos_dict['filosofia']['fecha_subida'] }}
+                                    </small>
+                                    <br>
+                                    <a href="{{ url_for('static', filename='uploads/' + archivos_dict['filosofia']['ruta_archivo']) }}" 
+                                       target="_blank" class="btn btn-sm btn-outline-primary mt-1">
+                                        📄 Ver Archivo
+                                    </a>
+                                {% else %}
+                                    <span class="status-not-uploaded">No hay archivo subido</span>
+                                {% endif %}
+                            </div>
+                            <div class="col-md-4 text-center">
+                                {% if 'filosofia' in formatos_disponibles %}
+                                    <a href="{{ url_for('descargar_formato', tipo='filosofia') }}" 
+                                       class="btn btn-primary btn-sm">
+                                        📥 Descargar Formato
+                                    </a>
+                                {% else %}
+                                    <span class="text-muted">Formato no disponible</span>
+                                {% endif %}
+                            </div>
+                            <div class="col-md-4">
+                                <form method="POST" action="{{ url_for('subir_archivo', docente_id=docente.id) }}" 
+                                      enctype="multipart/form-data" class="d-flex align-items-center">
+                                    <input type="hidden" name="tipo_archivo" value="filosofia">
+                                    <input type="file" name="archivo" accept=".pdf" 
+                                           class="form-control form-control-sm me-2" required>
+                                    <button type="submit" class="btn btn-sm btn-upload">
+                                        Subir Filosofía
+                                    </button>
+                                </form>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Debug Info (solo en modo desarrollo) -->
+        {% if config.DEBUG %}
+        <div class="row mt-4">
+            <div class="col-12">
+                <div class="card">
+                    <div class="card-body">
+                        <h4 class="text-warning">Información de Debug</h4>
+                        <div class="alert alert-info">
+                            <strong>Archivos en BD:</strong> {{ archivos|length }}<br>
+                            <strong>Tipos con archivos:</strong> {{ archivos_dict.keys()|list if archivos_dict else 'Ninguno' }}<br>
+                            <strong>Formatos disponibles:</strong> {{ formatos_disponibles|join(', ') if formatos_disponibles else 'Ninguno' }}<br>
+                            <a href="{{ url_for('debug_archivos', docente_id=docente.id) }}" 
+                               target="_blank" class="btn btn-sm btn-warning mt-2">
+                                🔍 Ver Debug Completo
+                            </a>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+        {% endif %}
+
+        <!-- Cursos Asignados -->
+        <div class="row mt-4">
+            <div class="col-12">
+                <div class="card">
+                    <div class="card-body">
+                        <h3 class="card-title text-danger">Cursos Asignados</h3>
+                        {% if cursos %}
+                            <div class="row">
+                                {% for curso in cursos %}
+                                <div class="col-md-6 col-lg-4 mb-3">
+                                    <div class="card border-secondary">
+                                        <div class="card-body">
+                                            <h5 class="card-title">{{ curso.nombre }}</h5>
+                                            <a href="{{ url_for('curso', docente_id=docente.id, curso_id=curso.id) }}" 
+                                               class="btn btn-outline-primary btn-sm">
+                                                📚 Ver Curso
+                                            </a>
+                                        </div>
+                                    </div>
+                                </div>
+                                {% endfor %}
+                            </div>
+                        {% else %}
+                            <div class="alert alert-info">
+                                <i class="fas fa-info-circle"></i>
+                                No tiene cursos asignados actualmente. Contacte al administrador para asignar cursos.
+                            </div>
+                        {% endif %}
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Footer -->
+    <footer class="mt-5 py-4 bg-light border-top">
+        <div class="container text-center">
+            <p class="text-muted mb-0">
+                &copy; 2024 Sistema de Gestión Docente - UNSAAC
+            </p>
+        </div>
+    </footer>
+
+    <!-- Bootstrap JS -->
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/js/bootstrap.bundle.min.js"></script>
+    
+    <!-- Script para mejorar UX -->
+    <script>
+        // Auto-ocultar alertas después de 5 segundos
+        document.addEventListener('DOMContentLoaded', function() {
+            const alerts = document.querySelectorAll('.alert');
+            alerts.forEach(function(alert) {
+                if (!alert.classList.contains('alert-info')) {
+                    setTimeout(function() {
+                        alert.style.opacity = '0';
+                        setTimeout(function() {
+                            alert.remove();
+                        }, 300);
+                    }, 5000);
+                }
+            });
+        });
+
+        // Validación de archivos antes del envío
+        document.querySelectorAll('input[type="file"]').forEach(function(input) {
+            input.addEventListener('change', function(e) {
+                const file = e.target.files[0];
+                if (file) {
+                    // Verificar que sea PDF
+                    if (file.type !== 'application/pdf') {
+                        alert('Solo se permiten archivos PDF');
+                        e.target.value = '';
+                        return;
+                    }
+                    
+                    // Verificar tamaño (máximo 10MB)
+                    if (file.size > 10 * 1024 * 1024) {
+                        alert('El archivo es demasiado grande. Máximo 10MB permitido.');
+                        e.target.value = '';
+                        return;
+                    }
+                }
+            });
+        });
+    </script>
+</body>
+</html>

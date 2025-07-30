@@ -1,0 +1,294 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Gestionar Formatos - Admin</title>
+    <link rel="stylesheet" href="{{ url_for('static', filename='css/style.css') }}">
+</head>
+<body>
+    <header>
+        <div class="container">
+            <h1>Gestionar Formatos PDF</h1>
+            <nav>
+                <a href="{{ url_for('admin_dashboard') }}" class="btn-back">Volver al Dashboard</a>
+                <a href="{{ url_for('logout') }}" class="logout-btn">Cerrar Sesión</a>
+            </nav>
+        </div>
+    </header>
+    
+    <main class="container">
+        {% with messages = get_flashed_messages(with_categories=true) %}
+            {% if messages %}
+                {% for category, message in messages %}
+                    <div class="flash-{{ category }}">{{ message }}</div>
+                {% endfor %}
+            {% endif %}
+        {% endwith %}
+        
+        <section class="formatos-section">
+            <h2>Subir Formatos PDF</h2>
+            <p>Sube los archivos PDF que servirán como formatos para que los docentes los descarguen como guía.</p>
+            
+            <!-- Formulario unificado con selector -->
+            <div class="upload-form-container">
+                <form action="{{ url_for('gestionar_formatos') }}" method="POST" enctype="multipart/form-data" class="form-upload-formato">
+                    <div class="form-group">
+                        <label for="tipo_formato">Tipo de Formato:</label>
+                        <select name="tipo_formato" id="tipo_formato" required>
+                            <option value="">-- Seleccionar tipo de formato --</option>
+                            <option value="caratula">Carátula</option>
+                            <option value="carga_lectiva">Carga Lectiva</option>
+                            <option value="cv">CV (Curriculum Vitae)</option>
+                            <option value="filosofia">Filosofía Docente</option>
+                        </select>
+                    </div>
+                    
+                    <div class="form-group">
+                        <label for="archivo">Archivo PDF:</label>
+                        <input type="file" name="archivo" id="archivo" accept=".pdf" required>
+                    </div>
+                    
+                    <button type="submit" class="btn-upload-main">Subir Formato</button>
+                </form>
+            </div>
+            
+            <!-- Estado de formatos disponibles -->
+            <div class="formatos-status">
+                <h3>Estado de los Formatos</h3>
+                <div class="status-grid">
+                    <div class="status-item">
+                        <span class="format-name">Carátula:</span>
+                        {% if formatos.caratula %}
+                            <span class="status-disponible">✅ Disponible</span>
+                            <a href="{{ url_for('descargar_formato', tipo='caratula') }}" class="btn-preview">Ver</a>
+                        {% else %}
+                            <span class="status-faltante">❌ No disponible</span>
+                        {% endif %}
+                    </div>
+                    
+                    <div class="status-item">
+                        <span class="format-name">Carga Lectiva:</span>
+                        {% if formatos.carga_lectiva %}
+                            <span class="status-disponible">✅ Disponible</span>
+                            <a href="{{ url_for('descargar_formato', tipo='carga_lectiva') }}" class="btn-preview">Ver</a>
+                        {% else %}
+                            <span class="status-faltante">❌ No disponible</span>
+                        {% endif %}
+                    </div>
+                    
+                    <div class="status-item">
+                        <span class="format-name">CV:</span>
+                        {% if formatos.cv %}
+                            <span class="status-disponible">✅ Disponible</span>
+                            <a href="{{ url_for('descargar_formato', tipo='cv') }}" class="btn-preview">Ver</a>
+                        {% else %}
+                            <span class="status-faltante">❌ No disponible</span>
+                        {% endif %}
+                    </div>
+                    
+                    <div class="status-item">
+                        <span class="format-name">Filosofía Docente:</span>
+                        {% if formatos.filosofia %}
+                            <span class="status-disponible">✅ Disponible</span>
+                            <a href="{{ url_for('descargar_formato', tipo='filosofia') }}" class="btn-preview">Ver</a>
+                        {% else %}
+                            <span class="status-faltante">❌ No disponible</span>
+                        {% endif %}
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <section class="instrucciones">
+            <h3>Instrucciones:</h3>
+            <ul>
+                <li>Solo se permiten archivos PDF</li>
+                <li>Los formatos deben ser plantillas claras que los docentes puedan seguir</li>
+                <li>Si subes un nuevo formato, reemplazará automáticamente el anterior</li>
+                <li>Los docentes verán un botón "Descargar Formato" solo para los formatos disponibles</li>
+            </ul>
+        </section>
+    </main>
+    
+    <footer>
+        <div class="container">
+            <p>Universidad Nacional San Antonio Abad del Cusco - Panel Administrativo</p>
+        </div>
+    </footer>
+
+    <style>
+        .formatos-section {
+            margin-bottom: 30px;
+        }
+
+        .upload-form-container {
+            background-color: #f8f9fa;
+            padding: 25px;
+            border-radius: 8px;
+            border: 1px solid #dee2e6;
+            margin-bottom: 30px;
+        }
+
+        .form-upload-formato {
+            display: flex;
+            flex-direction: column;
+            gap: 20px;
+            max-width: 500px;
+        }
+
+        .form-group {
+            display: flex;
+            flex-direction: column;
+            gap: 8px;
+        }
+
+        .form-group label {
+            font-weight: bold;
+            color: #800000;
+            font-size: 14px;
+        }
+
+        .form-group select,
+        .form-group input[type="file"] {
+            padding: 10px;
+            border: 1px solid #ddd;
+            border-radius: 4px;
+            font-size: 14px;
+        }
+
+        .form-group select:focus,
+        .form-group input[type="file"]:focus {
+            outline: none;
+            border-color: #800000;
+            box-shadow: 0 0 0 2px rgba(128, 0, 0, 0.2);
+        }
+
+        .btn-upload-main {
+            background-color: #800000;
+            color: white;
+            border: none;
+            padding: 12px 20px;
+            border-radius: 4px;
+            cursor: pointer;
+            font-weight: bold;
+            font-size: 16px;
+            transition: background-color 0.3s;
+        }
+
+        .btn-upload-main:hover {
+            background-color: #600000;
+        }
+
+        .formatos-status {
+            background-color: #fff;
+            padding: 20px;
+            border-radius: 8px;
+            border: 1px solid #dee2e6;
+        }
+
+        .formatos-status h3 {
+            margin-top: 0;
+            color: #800000;
+            margin-bottom: 20px;
+        }
+
+        .status-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+            gap: 15px;
+        }
+
+        .status-item {
+            display: flex;
+            align-items: center;
+            gap: 10px;
+            padding: 12px;
+            background-color: #f8f9fa;
+            border-radius: 6px;
+            border: 1px solid #e9ecef;
+        }
+
+        .format-name {
+            font-weight: bold;
+            min-width: 120px;
+            color: #495057;
+        }
+
+        .status-disponible {
+            color: #28a745;
+            font-weight: bold;
+            font-size: 14px;
+        }
+
+        .status-faltante {
+            color: #dc3545;
+            font-weight: bold;
+            font-size: 14px;
+        }
+
+        .btn-preview {
+            background-color: #007bff;
+            color: white;
+            padding: 4px 8px;
+            border-radius: 3px;
+            text-decoration: none;
+            font-size: 12px;
+            transition: background-color 0.3s;
+        }
+
+        .btn-preview:hover {
+            background-color: #0056b3;
+        }
+
+        .instrucciones {
+            background-color: #e9ecef;
+            padding: 20px;
+            border-radius: 8px;
+            margin-top: 30px;
+        }
+
+        .instrucciones h3 {
+            margin-top: 0;
+            color: #800000;
+        }
+
+        .instrucciones ul {
+            margin: 10px 0 0 20px;
+        }
+
+        .instrucciones li {
+            margin-bottom: 8px;
+        }
+
+        .btn-back {
+            background-color: #6c757d;
+            color: white;
+            padding: 8px 15px;
+            border-radius: 4px;
+            text-decoration: none;
+            margin-right: 10px;
+        }
+
+        .btn-back:hover {
+            background-color: #545b62;
+        }
+
+        @media (max-width: 768px) {
+            .status-grid {
+                grid-template-columns: 1fr;
+            }
+            
+            .status-item {
+                flex-direction: column;
+                align-items: flex-start;
+                gap: 8px;
+            }
+            
+            .format-name {
+                min-width: auto;
+            }
+        }
+    </style>
+</body>
+</html>
